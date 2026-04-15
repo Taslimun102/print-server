@@ -8,4 +8,4 @@ c.execute("INSERT OR IGNORE INTO users (username, password) VALUES (?, ?)", ("ad
 conn.commit()
 conn.close()
 
-print("✅ Admin user added")
+print("Admin user added")
