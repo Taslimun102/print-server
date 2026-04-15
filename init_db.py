@@ -33,4 +33,4 @@ CREATE TABLE files (
 conn.commit()
 conn.close()
 
-print("✅ Database Ready")
+print("Database Ready")
