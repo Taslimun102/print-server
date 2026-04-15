@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Login</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body{
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  height:100vh; display:flex; justify-content:center; align-items:center;
+}
+.container-box{
+  width:900px; height:500px; background:#fff; border-radius:20px;
+  display:flex; overflow:hidden; box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+.left{
+  width:50%; color:#fff; display:flex; flex-direction:column;
+  justify-content:center; align-items:center; text-align:center;
+  background: linear-gradient(to right, #000000, #434343);
+}
+.right{ width:50%; padding:40px; position:relative; }
+
+.form-box{ position:absolute; width:70%; transition:0.4s; }
+#loginForm{ opacity:1; z-index:1; }
+#signupForm{ opacity:0; z-index:0; }
+
+.container-box.signup #loginForm{ opacity:0; z-index:0; }
+.container-box.signup #signupForm{ opacity:1; z-index:1; }
+</style>
+</head>
+<body>
+
+<div class="container-box" id="box">
+  <div class="left">
+    <h2 id="title">Admin Panel</h2>
+    <p id="text">Login as admin</p>
+    <button class="btn btn-light" onclick="showLogin()">Login</button>
+    <button class="btn btn-outline-light mt-2" onclick="showSignup()">Signup</button>
+  </div>
+
+  <div class="right">
+
+    <!-- LOGIN -->
+    <div class="form-box" id="loginForm">
+      <h3>Admin Login</h3>
+      {% if error %}<p style="color:red">{{error}}</p>{% endif %}
+      <form method="post" action="/admin_login">
+        <input name="username" class="form-control mb-2" placeholder="Username" required>
+        <input name="password" type="password" class="form-control mb-2" placeholder="Password" required>
+        <button class="btn btn-dark w-100">Login</button>
+      </form>
+    </div>
+
+    <!-- SIGNUP -->
+    <div class="form-box" id="signupForm">
+      <h3>Create Admin</h3>
+      <form method="post" action="/admin_signup">
+        <input name="username" class="form-control mb-2" placeholder="Username" required>
+        <input name="password" type="password" class="form-control mb-2" placeholder="Password" required>
+        <button class="btn btn-secondary w-100">Signup</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function showSignup(){
+  document.getElementById("box").classList.add("signup");
+  document.getElementById("title").innerText="New Admin?";
+  document.getElementById("text").innerText="Create admin account";
+}
+function showLogin(){
+  document.getElementById("box").classList.remove("signup");
+  document.getElementById("title").innerText="Admin Panel";
+  document.getElementById("text").innerText="Login as admin";
+}
+</script>
+
+</body>
+</html>

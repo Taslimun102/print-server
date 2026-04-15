@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fa;
+        }
+        .card-box {
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+        }
+        .bg-blue { background: #4e73df; }
+        .bg-green { background: #1cc88a; }
+        .bg-orange { background: #f6c23e; }
+
+        .table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="container mt-4">
+
+<h2 class="mb-4">Admin Dashboard</h2>
+
+<!-- 🔹 Stats Cards -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card-box bg-blue">
+            <h5>Total Users</h5>
+            <h2>{{ total_users }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card-box bg-green">
+            <h5>Total Files</h5>
+            <h2>{{ total_files }}</h2>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card-box bg-orange">
+            <h5>Printed Jobs</h5>
+            <h2>{{ total_printed }}</h2>
+        </div>
+    </div>
+</div>
+
+<!-- 🔹 Users Section -->
+<h4>Users</h4>
+<table class="table table-bordered">
+    <tr>
+        <th>Username</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for u in users %}
+    <tr>
+        <td>{{ u[0] }}</td>
+        <td>
+            <!-- Delete -->
+            <a href="/delete_user/{{ u[0] }}" class="btn btn-danger btn-sm">Delete</a>
+
+            <!-- Reset Password -->
+            <form action="/reset_password/{{ u[0] }}" method="post" style="display:inline;">
+                <input name="new_password" placeholder="New Pass" required>
+                <button class="btn btn-warning btn-sm">Reset</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="/admin/database" class="btn btn-primary mb-3">View Database</a>
+<!-- 🔹 Print Jobs -->
+<h4 class="mt-4">All Print Jobs</h4>
+<table class="table table-bordered">
+    <tr>
+        <th>File</th>
+        <th>Status</th>
+        <th>User</th>
+    </tr>
+
+    {% for f in files %}
+    <tr>
+        <td>{{ f[0] }}</td>
+
+        <td>
+            {% if f[1] == 'Printed' %}
+                <span class="badge bg-success">Printed</span>
+            {% else %}
+                <span class="badge bg-secondary">{{ f[1] }}</span>
+            {% endif %}
+        </td>
+
+        <td>{{ f[2] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<a href="/logout" class="btn btn-dark mt-3">Logout</a>
+
+</body>
+</html>
